@@ -16,7 +16,6 @@ from .transforms import select_transform
 
 
 def select_dataset(name, path, split, transform, **kwargs):
-    print("Transform:", transform)
     if name == "celeba":
         return CelebaDataset(path, transform=transform, split=split, **kwargs)
 
@@ -32,6 +31,7 @@ def select_dataset(name, path, split, transform, **kwargs):
         )
 
     if name in ["imagedir", "image-folder"]:
+        print("Transform:", transform)
         return torchvision.datasets.ImageFolder(
             os.path.join(path, split), transform=transform, **kwargs
         )

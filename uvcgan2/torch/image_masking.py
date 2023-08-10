@@ -46,8 +46,8 @@ class ImagePatchRandomMasking(nn.Module):
         mask = mask.repeat_interleave(self._patch_size[0], dim=2)
         mask = mask.repeat_interleave(self._patch_size[1], dim=3)
 
-        if mask.shape[2] == 129:
-            mask = torch.cat((mask, mask[:, :, -1:, :]), dim=2)
+        # if mask.shape[2] == 129:
+        #     mask = torch.cat((mask, mask[:, :, -1:, :]), dim=2)
 
         return mask.to(image.device) * image
 
