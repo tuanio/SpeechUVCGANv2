@@ -31,7 +31,7 @@ args_dict = {
                     },
                     {
                         "name": "resize",
-                        "size": 128,
+                        "size": (128, 128),
                     }
                 ],
                 "transform_test": [
@@ -41,7 +41,7 @@ args_dict = {
                     },
                     {
                         "name": "resize",
-                        "size": 128,
+                        "size": (128, 128),
                     }
                 ],
             },
@@ -78,7 +78,7 @@ args_dict = {
     "model_args": {
         "masking": {
             "name": "image-patch-random",
-            "patch_size": (32, 32),
+            "patch_size": (16, 16),
             "fraction": 0.4,
         },
     },

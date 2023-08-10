@@ -87,7 +87,7 @@ args_dict = {
                     },
                     {
                         "name": "resize",
-                        "size": 128,
+                        "size": (128, 128),
                     }
                 ],
                 "transform_test": [
@@ -97,7 +97,7 @@ args_dict = {
                     },
                     {
                         "name": "resize",
-                        "size": 128,
+                        "size": (128, 128),
                     }
                 ]
             }
