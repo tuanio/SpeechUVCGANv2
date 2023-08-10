@@ -23,7 +23,7 @@ args_dict = {
                     "name": "imagedir",
                     "path": "celeba_hq_resized_lanczos",
                 },
-                "shape": (1, 128, 128),
+                "shape": (1, 129, 128),
                 "transform_train": None,
                 "transform_test": None,
             },
