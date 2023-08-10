@@ -35,7 +35,7 @@ args = parser.parse_args()
 wavs = glob.glob(os.path.join(args.src_path, "*.wav"))
 
 FIX_W = 128
-N_FFT = 256
+N_FFT = 255
 
 # to convert the spectrogram ( an 2d-array of real numbers) to a storable form (0-255)
 def scale_minmax(X, min=0.0, max=1.0):

@@ -38,7 +38,7 @@ parser.add_argument(
 parser.add_argument("--threads", type=int, default=16)
 parser.add_argument("--state", type=str, default="train")  # train or test
 parser.add_argument("--fix-w", type=int, default=128)
-parser.add_argument("--n-fft", type=int, default=256)
+parser.add_argument("--n-fft", type=int, default=255)
 parser.add_argument("--energy", type=float, default=1.0)
 parser.add_argument("--power", type=float, default=1.0)
 args = parser.parse_args()
