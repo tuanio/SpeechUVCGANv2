@@ -28,16 +28,16 @@ args_dict = {
                 "transform_train": None,
                 "transform_test": None,
             },
-            {
-                "dataset": {
-                    "name": "imagedir",
-                    "domain": "noisy",
-                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train/noisy",
-                },
-                "shape": (1, 129, 128),
-                "transform_train": None,
-                "transform_test": None,
-            },
+            # {
+            #     "dataset": {
+            #         "name": "imagedir",
+            #         "domain": "noisy",
+            #         "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train/noisy",
+            #     },
+            #     "shape": (1, 129, 128),
+            #     "transform_train": None,
+            #     "transform_test": None,
+            # },
         ],
         "merge_type": "unpaired",
         "workers": 16,
