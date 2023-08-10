@@ -70,7 +70,7 @@ def get_transfer_preset(cmdargs):
 
 cmdargs = parse_cmdargs()
 args_dict = {
-    "batch_size": 32,
+    "batch_size": 64,
     "data": {
         "datasets": [
             {
