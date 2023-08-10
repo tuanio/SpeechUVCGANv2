@@ -18,7 +18,7 @@ TRANSFORM_DICT = {
     "RandomHorizontalFlip": transforms.RandomHorizontalFlip,
     "RandomRotation": transforms.RandomRotation,
     "Resize": transforms.Resize,
-    "grayscale": transforms.Grayscale
+    "grayscale": transforms.Grayscale,
 }
 
 

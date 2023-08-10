@@ -15,17 +15,9 @@ class TrainingHistory:
         values["time"] = pd.Timestamp.utcnow()
 
         if self._history is None:
-            self._history = pd.DataFrame(
-                [
-                    values,
-                ]
-            )
+            self._history = pd.DataFrame([values])
         else:
-            self._history = self._history.append(
-                [
-                    values,
-                ]
-            )
+            self._history = pd.concat([self._history, pd.DataFrame([value])])
 
         self.save()
 

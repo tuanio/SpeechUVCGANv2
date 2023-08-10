@@ -47,12 +47,14 @@ FIX_W = args.fix_w
 N_FFT = args.n_fft
 metadata_path = args.src_metadata_path
 
+
 # to get the original spectrogram ( an 2d-array of real numbers) from an image form (0-255)
 def unscale_minmax(X, X_min, X_max, min=0.0, max=1.0):
     X = X.astype(float)
     X = (X - min) / (max - min)
     X = (X * X_max - X_min) + X_min
     return X
+
 
 list_mag = glob.glob(os.path.join(args.src_magnitude_path, "*_mag.png"))
 list_mag = sorted(list_mag)
@@ -72,11 +74,12 @@ audio_list = []
 for k, v in tqdm(data_dict.items(), "Concatenating..."):
     audio_list.append({"name": k, "mag": np.concatenate(v, axis=1)})
 
+
 def combine(pack):
     metadata = torch.load(os.path.join(metadata_path, pack["name"] + "_metadata.pt"))
     h, w = metadata["size"]
-    im_mag = pack['mag']
-    _min, _max = metadata['scale_param']
+    im_mag = pack["mag"]
+    _min, _max = metadata["scale_param"]
     mod_fix_w = w % FIX_W
     if mod_fix_w != 0:
         im_mag = im_mag[:, : -(FIX_W - mod_fix_w)]

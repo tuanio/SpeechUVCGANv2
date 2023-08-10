@@ -185,7 +185,9 @@ def denorm_and_numpy(inp_tensor):
         (1, 2, 0)
     )  # permute the tensor from C x H x W to H x W x C (numpy equivalent)
     inp_tensor = ((inp_tensor * 0.5) + 0.5) * 255  # to get back from transformation
-    inp_tensor = inp_tensor.squeeze().numpy().astype(np.uint8)  # generating Numpy ndarray
+    inp_tensor = (
+        inp_tensor.squeeze().numpy().astype(np.uint8)
+    )  # generating Numpy ndarray
     return inp_tensor
 
 

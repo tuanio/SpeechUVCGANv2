@@ -37,17 +37,17 @@ wavs = glob.glob(os.path.join(args.src_path, "*.wav"))
 FIX_W = 128
 N_FFT = 255
 
+
 # to convert the spectrogram ( an 2d-array of real numbers) to a storable form (0-255)
 def scale_minmax(X, min=0.0, max=1.0):
     X_std = (X - X.min()) / (X.max() - X.min())
     X_scaled = X_std * (max - min) + min
     return X_scaled, X.min(), X.max()
 
+
 def extract(file):
     data, sr = librosa.load(file, sr=None)
-    comp_spec = librosa.stft(
-        data, n_fft=N_FFT, hop_length=64, window="hamming"
-    )
+    comp_spec = librosa.stft(data, n_fft=N_FFT, hop_length=64, window="hamming")
     mag_spec, phase = librosa.magphase(comp_spec)
 
     phase_in_angle = np.angle(phase)
@@ -57,7 +57,7 @@ def extract(file):
     extra_cols = 0
     if mod_fix_w != 0:
         extra_cols = FIX_W - mod_fix_w
-    
+
     num_wraps = math.ceil(extra_cols / w)
     temp_roll_mag = np.tile(mag_spec, num_wraps)
     padd_mag = temp_roll_mag[:, :extra_cols]
@@ -75,20 +75,18 @@ def extract(file):
 
     h, w = phase.shape
 
-    metadata = dict(
-        phase=phase, size=(h, w), sr=sr, scale_param=(_min, _max)
-    )
+    metadata = dict(phase=phase, size=(h, w), sr=sr, scale_param=(_min, _max))
 
     return spec_components, metadata
+
 
 def componentize(file):
     name = file.rsplit(os.sep, 1)[-1].rsplit(".", 1)[0]
     mag_components, metadata = extract(file)
     for idx, mag in enumerate(mag_components):
-        mag.save(
-            os.path.join(args.tgt_magnitude_path, f"{name}_{idx}_mag.png"), "PNG"
-        )
+        mag.save(os.path.join(args.tgt_magnitude_path, f"{name}_{idx}_mag.png"), "PNG")
     torch.save(metadata, os.path.join(args.tgt_metadata_path, f"{name}_metadata.pt"))
+
 
 with cf.ThreadPoolExecutor(max_workers=args.threads) as exe:
     list(exe.map(componentize, wavs))

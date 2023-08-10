@@ -25,24 +25,18 @@ args_dict = {
                 },
                 "shape": (1, 128, 128),
                 "transform_train": [
-                    {
-                        'name': 'grayscale',
-                        'num_output_channels': 1
-                    },
+                    {"name": "grayscale", "num_output_channels": 1},
                     {
                         "name": "resize",
                         "size": (128, 128),
-                    }
+                    },
                 ],
                 "transform_test": [
-                    {
-                        'name': 'grayscale',
-                        'num_output_channels': 1
-                    },
+                    {"name": "grayscale", "num_output_channels": 1},
                     {
                         "name": "resize",
                         "size": (128, 128),
-                    }
+                    },
                 ],
             },
             # {
