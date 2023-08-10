@@ -89,7 +89,7 @@ args_dict = {
     "label": f"pretrain-{cmdargs.gen}",
     "outdir": os.path.join(ROOT_OUTDIR, "clean2noisy_output"),
     "log_level": "DEBUG",
-    "checkpoint": 100,
+    "checkpoint": 50,
 }
 
 train(args_dict)
