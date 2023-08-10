@@ -21,7 +21,7 @@ args_dict = {
             {
                 "dataset": {
                     "name": "imagedir",
-                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h",
+                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/splitted_data",
                 },
                 "shape": (1, 129, 128),
                 "transform_train": None,
