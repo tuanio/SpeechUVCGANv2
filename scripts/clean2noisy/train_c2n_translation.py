@@ -77,7 +77,7 @@ args_dict = {
                 "dataset": {
                     "name": "image-domain-hierarchy",
                     "domain": domain,
-                    "path": "celeba_hq_resized_lanczos",
+                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/splitted_data",
                 },
                 "shape": (1, 128, 128),
                 "transform_train": [
@@ -95,7 +95,7 @@ args_dict = {
                     },
                 ],
             }
-            for domain in ["male", "female"]
+            for domain in ["clean", "noisy"]
         ],
         "merge_type": "unpaired",
         "workers": 8,
