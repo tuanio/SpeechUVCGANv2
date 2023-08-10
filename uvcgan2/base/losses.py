@@ -6,6 +6,7 @@
 import torch
 from torch import nn
 
+
 class GANLoss(nn.Module):
     """Define different GAN objectives.
 
@@ -13,10 +14,8 @@ class GANLoss(nn.Module):
     that has the same size as the input.
     """
 
-    def __init__(
-        self, gan_mode, target_real_label = 1.0, target_fake_label = 0.0
-    ):
-        """ Initialize the GANLoss class.
+    def __init__(self, gan_mode, target_real_label=1.0, target_fake_label=0.0):
+        """Initialize the GANLoss class.
 
         Parameters:
             gan_mode (str) -- the type of GAN objective.
@@ -31,25 +30,25 @@ class GANLoss(nn.Module):
         super().__init__()
 
         # pylint: disable=not-callable
-        self.register_buffer('real_label', torch.tensor(target_real_label))
-        self.register_buffer('fake_label', torch.tensor(target_fake_label))
+        self.register_buffer("real_label", torch.tensor(target_real_label))
+        self.register_buffer("fake_label", torch.tensor(target_fake_label))
 
         self.gan_mode = gan_mode
 
-        if gan_mode == 'lsgan':
+        if gan_mode == "lsgan":
             self.loss = nn.MSELoss()
 
-        elif gan_mode == 'vanilla':
+        elif gan_mode == "vanilla":
             self.loss = nn.BCEWithLogitsLoss()
 
-        elif gan_mode == 'softplus':
+        elif gan_mode == "softplus":
             self.loss = nn.Softplus()
 
-        elif gan_mode == 'wgan':
+        elif gan_mode == "wgan":
             self.loss = None
 
         else:
-            raise NotImplementedError('gan mode %s not implemented' % gan_mode)
+            raise NotImplementedError("gan mode %s not implemented" % gan_mode)
 
     def get_target_tensor(self, prediction, target_is_real):
         """Create label tensors with the same size as the input.
@@ -88,13 +87,13 @@ class GANLoss(nn.Module):
             result = sum(self.forward(x, target_is_real) for x in prediction)
             return result / len(prediction)
 
-        if self.gan_mode == 'wgan':
+        if self.gan_mode == "wgan":
             if target_is_real:
                 return -prediction.mean()
             else:
                 return prediction.mean()
 
-        if self.gan_mode == 'softplus':
+        if self.gan_mode == "softplus":
             if target_is_real:
                 return self.loss(prediction).mean()
             else:
@@ -103,11 +102,11 @@ class GANLoss(nn.Module):
         target_tensor = self.get_target_tensor(prediction, target_is_real)
         return self.loss(prediction, target_tensor)
 
+
 # pylint: disable=too-many-arguments
 # pylint: disable=redefined-builtin
 def cal_gradient_penalty(
-    netD, real_data, fake_data, device,
-    type = 'mixed', constant = 1.0, lambda_gp = 10.0
+    netD, real_data, fake_data, device, type="mixed", constant=1.0, lambda_gp=10.0
 ):
     """Calculate the gradient penalty loss, used in WGAN-GP
 
@@ -129,27 +128,32 @@ def cal_gradient_penalty(
     if lambda_gp == 0.0:
         return 0.0, None
 
-    if type == 'real':
+    if type == "real":
         interpolatesv = real_data
-    elif type == 'fake':
+    elif type == "fake":
         interpolatesv = fake_data
-    elif type == 'mixed':
-        alpha = torch.rand(real_data.shape[0], 1, device = device)
-        alpha = alpha.expand(
-            real_data.shape[0], real_data.nelement() // real_data.shape[0]
-        ).contiguous().view(*real_data.shape)
+    elif type == "mixed":
+        alpha = torch.rand(real_data.shape[0], 1, device=device)
+        alpha = (
+            alpha.expand(real_data.shape[0], real_data.nelement() // real_data.shape[0])
+            .contiguous()
+            .view(*real_data.shape)
+        )
 
         interpolatesv = alpha * real_data + ((1 - alpha) * fake_data)
     else:
-        raise NotImplementedError('{} not implemented'.format(type))
+        raise NotImplementedError("{} not implemented".format(type))
 
     interpolatesv.requires_grad_(True)
     disc_interpolates = netD(interpolatesv)
 
     gradients = torch.autograd.grad(
-        outputs=disc_interpolates, inputs=interpolatesv,
+        outputs=disc_interpolates,
+        inputs=interpolatesv,
         grad_outputs=torch.ones(disc_interpolates.size()).to(device),
-        create_graph=True, retain_graph=True, only_inputs=True
+        create_graph=True,
+        retain_graph=True,
+        only_inputs=True,
     )
 
     gradients = gradients[0].view(real_data.size(0), -1)
@@ -160,22 +164,22 @@ def cal_gradient_penalty(
 
     return gradient_penalty, gradients
 
+
 def calc_zero_gp(model, x, **model_kwargs):
     x.requires_grad_(True)
     y = model(x, **model_kwargs)
 
     grad = torch.autograd.grad(
-        outputs      = y,
-        inputs       = x,
-        grad_outputs = torch.ones(y.size()).to(y.device),
-        create_graph = True,
-        retain_graph = True,
-        only_inputs  = True
+        outputs=y,
+        inputs=x,
+        grad_outputs=torch.ones(y.size()).to(y.device),
+        create_graph=True,
+        retain_graph=True,
+        only_inputs=True,
     )
 
     grad = grad[0].view(x.shape[0], -1)
     # NOTE: 1/2 for backward compatibility
-    gp   = 1/2 * torch.sum(grad.square(), dim = 1).mean()
+    gp = 1 / 2 * torch.sum(grad.square(), dim=1).mean()
 
     return gp, grad
-

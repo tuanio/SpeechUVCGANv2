@@ -1,5 +1,6 @@
 from collections.abc import Mapping
 
+
 class NamedDict(Mapping):
     # pylint: disable=too-many-instance-attributes
 
@@ -14,7 +15,7 @@ class NamedDict(Mapping):
         self._fields.update(**kwargs)
 
     def __contains__(self, key):
-        return (key in self._fields)
+        return key in self._fields
 
     def __getitem__(self, key):
         return self._fields[key]
@@ -45,4 +46,3 @@ class NamedDict(Mapping):
 
     def values(self):
         return self._fields.values()
-

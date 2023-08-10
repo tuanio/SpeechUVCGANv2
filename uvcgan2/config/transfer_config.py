@@ -1,5 +1,6 @@
 from .config_base import ConfigBase
 
+
 class TransferConfig(ConfigBase):
     """Model transfer configuration.
 
@@ -29,25 +30,24 @@ class TransferConfig(ConfigBase):
     """
 
     __slots__ = [
-        'base_model',
-        'transfer_map',
-        'strict',
-        'allow_partial',
-        'fuzzy',
+        "base_model",
+        "transfer_map",
+        "strict",
+        "allow_partial",
+        "fuzzy",
     ]
 
     def __init__(
         self,
         base_model,
-        transfer_map  = None,
-        strict        = True,
-        allow_partial = False,
-        fuzzy         = None,
+        transfer_map=None,
+        strict=True,
+        allow_partial=False,
+        fuzzy=None,
     ):
         # pylint: disable=too-many-arguments
-        self.base_model    = base_model
-        self.transfer_map  = transfer_map  or {}
-        self.strict        = strict
+        self.base_model = base_model
+        self.transfer_map = transfer_map or {}
+        self.strict = strict
         self.allow_partial = allow_partial
-        self.fuzzy         = fuzzy
-
+        self.fuzzy = fuzzy

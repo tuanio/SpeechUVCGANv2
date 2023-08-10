@@ -1,6 +1,4 @@
-
 class DataLoaderZipper:
-
     def __init__(self, loaders):
         self._loaders = loaders
 
@@ -9,4 +7,3 @@ class DataLoaderZipper:
 
     def __iter__(self):
         return zip(*self._loaders)
-

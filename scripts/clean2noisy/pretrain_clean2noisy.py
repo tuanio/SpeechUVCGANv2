@@ -7,7 +7,7 @@ from uvcgan2.utils.parsers import add_preset_name_parser, add_batch_size_parser
 
 
 def parse_cmdargs():
-    parser = argparse.ArgumentParser(description="Pretrain CelebaHQ generators")
+    parser = argparse.ArgumentParser(description="Pretrain Clean2Noisy generators")
     add_preset_name_parser(parser, "gen", GEN_PRESETS, "uvcgan2")
     add_batch_size_parser(parser, default=32)
     return parser.parse_args()
@@ -23,26 +23,13 @@ args_dict = {
                     "name": "imagedir",
                     "path": "celeba_hq_resized_lanczos",
                 },
-                "shape": (3, 256, 256),
-                "transform_train": [
-                    "random-flip-horizontal",
-                    {
-                        "name": "random-rotation",
-                        "degrees": 10,
-                    },
-                    {
-                        "name": "color-jitter",
-                        "brightness": 0.2,
-                        "contrast": 0.2,
-                        "saturation": 0.2,
-                        "hue": 0.2,
-                    },
-                ],
+                "shape": (1, 128, 128),
+                "transform_train": None,
                 "transform_test": None,
             },
         ],
         "merge_type": "none",
-        "workers": 1,
+        "workers": 4,
     },
     "epochs": 500,
     "discriminator": None,
@@ -78,7 +65,7 @@ args_dict = {
     "steps_per_epoch": 32 * 1024 // cmdargs.batch_size,
     # args
     "label": f"pretrain-{cmdargs.gen}",
-    "outdir": os.path.join(ROOT_OUTDIR, "celeba_hq_resized_lanczos"),
+    "outdir": os.path.join(ROOT_OUTDIR, "clean2noisy_output"),
     "log_level": "DEBUG",
     "checkpoint": 100,
 }

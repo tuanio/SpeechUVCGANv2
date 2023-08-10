@@ -1,9 +1,12 @@
+from uvcgan2.cgan import construct_model
 import argparse
 import os
 
 from uvcgan2 import ROOT_OUTDIR, train
 from uvcgan2.presets import GEN_PRESETS, BH_PRESETS
 from uvcgan2.utils.parsers import add_preset_name_parser
+from uvcgan2.cgan import construct_model
+from uvcgan2.config import Args
 
 
 def parse_cmdargs():
@@ -50,11 +53,12 @@ def get_transfer_preset(cmdargs):
     if cmdargs.no_pretrain:
         return None
 
-    base_model = (
-        "celeba_preproc/"
-        "model_m(simple-autoencoder)_d(None)"
-        f"_g({GEN_PRESETS[cmdargs.gen]['model']})_pretrain-{cmdargs.gen}"
-    )
+    # base_model = (
+    #     "celeba_preproc/"
+    #     "model_m(simple-autoencoder)_d(None)"
+    #     f"_g({GEN_PRESETS[cmdargs.gen]['model']})_pretrain-{cmdargs.gen}"
+    # )
+    base_model = None
 
     return {
         "base_model": base_model,
@@ -160,14 +164,20 @@ args_dict = {
     "loss": "lsgan",
     "steps_per_epoch": 2000,
     "transfer": get_transfer_preset(cmdargs),
-    # args
-    "label": (
-        f"{cmdargs.gen}-{cmdargs.head}_({cmdargs.no_pretrain}"
-        f":{cmdargs.lambda_cyc}:{cmdargs.lambda_gp}:{cmdargs.lr_gen})"
-    ),
+    # # args
+    # "label": (
+    #     f"{cmdargs.gen}-{cmdargs.head}_({cmdargs.no_pretrain}"
+    #     f":{cmdargs.lambda_cyc}:{cmdargs.lambda_gp}:{cmdargs.lr_gen})"
+    # ),
     "outdir": os.path.join(ROOT_OUTDIR, "celeba_preproc", "glasses"),
-    "log_level": "DEBUG",
-    "checkpoint": 50,
+    # "log_level": "DEBUG",
+    # "checkpoint": 50,
 }
 
-train(args_dict)
+args = Args.from_args_dict(**args_dict)
+
+print(args.config)
+
+model = construct_model(args.savedir, args.config, is_train=True, device="cpu")
+
+print(model)

@@ -7,7 +7,7 @@ from uvcgan2.utils.parsers import add_preset_name_parser
 
 
 def parse_cmdargs():
-    parser = argparse.ArgumentParser(description="Train Celeba Glasses I2I model")
+    parser = argparse.ArgumentParser(description="Train Clean2Noisy I2I model")
 
     add_preset_name_parser(parser, "gen", GEN_PRESETS, "uvcgan2")
     add_preset_name_parser(parser, "head", BH_PRESETS, "bsd", "batch head")
@@ -23,7 +23,7 @@ def parse_cmdargs():
         "--labmda-gp",
         dest="lambda_gp",
         type=float,
-        default=0.01,
+        default=1.0,
         help="magnitude of the gradient penalty",
     )
 
@@ -31,7 +31,7 @@ def parse_cmdargs():
         "--labmda-cycle",
         dest="lambda_cyc",
         type=float,
-        default=10.0,
+        default=5.0,
         help="magnitude of the cycle-consisntecy loss",
     )
 
@@ -51,7 +51,7 @@ def get_transfer_preset(cmdargs):
         return None
 
     base_model = (
-        "celeba_preproc/"
+        "celeba_hq_resized_lanczos/"
         "model_m(simple-autoencoder)_d(None)"
         f"_g({GEN_PRESETS[cmdargs.gen]['model']})_pretrain-{cmdargs.gen}"
     )
@@ -75,34 +75,15 @@ args_dict = {
         "datasets": [
             {
                 "dataset": {
-                    "name": "cyclegan",
+                    "name": "image-domain-hierarchy",
                     "domain": domain,
-                    "path": "celeba_glasses",
+                    "path": "celeba_hq_resized_lanczos",
                 },
-                "shape": (3, 256, 256),
-                "transform_train": [
-                    "random-flip-horizontal",
-                    {
-                        "name": "resize",
-                        "size": 256,
-                    },
-                    {
-                        "name": "random-crop",
-                        "size": 256,
-                    },
-                ],
-                "transform_test": [
-                    {
-                        "name": "resize",
-                        "size": 256,
-                    },
-                    {
-                        "name": "center-crop",
-                        "size": 256,
-                    },
-                ],
+                "shape": (1, 128, 128),
+                "transform_train": None,
+                "transform_test": None,
             }
-            for domain in ["a", "b"]
+            for domain in ["male", "female"]
         ],
         "merge_type": "unpaired",
         "workers": 1,
@@ -165,7 +146,7 @@ args_dict = {
         f"{cmdargs.gen}-{cmdargs.head}_({cmdargs.no_pretrain}"
         f":{cmdargs.lambda_cyc}:{cmdargs.lambda_gp}:{cmdargs.lr_gen})"
     ),
-    "outdir": os.path.join(ROOT_OUTDIR, "celeba_preproc", "glasses"),
+    "outdir": os.path.join(ROOT_OUTDIR, "clean2noisy_output", "c2n"),
     "log_level": "DEBUG",
     "checkpoint": 50,
 }

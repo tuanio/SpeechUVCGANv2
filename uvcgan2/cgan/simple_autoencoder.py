@@ -1,9 +1,10 @@
-from uvcgan2.torch.select             import select_optimizer, select_loss
-from uvcgan2.torch.image_masking      import select_masking
-from uvcgan2.models.generator         import construct_generator
+from uvcgan2.torch.select import select_optimizer, select_loss
+from uvcgan2.torch.image_masking import select_masking
+from uvcgan2.models.generator import construct_generator
 
 from .model_base import ModelBase
 from .named_dict import NamedDict
+
 
 class SimpleAutoencoder(ModelBase):
     """Model that tries to train an autoencoder (i.e. target == input).
@@ -13,50 +14,51 @@ class SimpleAutoencoder(ModelBase):
     """
 
     def _setup_images(self, _config):
-        images = [ 'real', 'reco' ]
+        images = ["real", "reco"]
 
         if self.masking is not None:
-            images.append('masked')
+            images.append("masked")
 
         return NamedDict(*images)
 
     def _setup_models(self, config):
         return NamedDict(
-            encoder = construct_generator(
+            encoder=construct_generator(
                 config.generator,
                 config.data.datasets[0].shape,
                 config.data.datasets[0].shape,
-                self.device
+                self.device,
             )
         )
 
     def _setup_losses(self, config):
         self.loss_fn = select_loss(config.loss)
 
-        assert config.gradient_penalty is None, \
-            "Autoencoder model does not support gradient penalty"
+        assert (
+            config.gradient_penalty is None
+        ), "Autoencoder model does not support gradient penalty"
 
-        return NamedDict('loss')
+        return NamedDict("loss")
 
     def _setup_optimizers(self, config):
         return NamedDict(
-            encoder = select_optimizer(
+            encoder=select_optimizer(
                 self.models.encoder.parameters(), config.generator.optimizer
             )
         )
 
-    def __init__(
-        self, savedir, config, is_train, device, masking = None
-    ):
+    def __init__(self, savedir, config, is_train, device, masking=None):
         # pylint: disable=too-many-arguments
         self.masking = select_masking(masking)
-        assert len(config.data.datasets) == 1, \
-            "Simple Autoencoder can work only with a single dataset"
+        assert (
+            len(config.data.datasets) == 1
+        ), "Simple Autoencoder can work only with a single dataset"
 
         super().__init__(savedir, config, is_train, device)
 
-        assert config.discriminator is None, \
-            "Autoencoder model does not use discriminator"
+        assert (
+            config.discriminator is None
+        ), "Autoencoder model does not use discriminator"
 
     def _set_input(self, inputs, _domain):
         # inputs : image or (image, label)
@@ -70,7 +72,7 @@ class SimpleAutoencoder(ModelBase):
             input_img = self.images.real
         else:
             self.images.masked = self.masking(self.images.real)
-            input_img          = self.images.masked
+            input_img = self.images.masked
 
         self.images.reco = self.models.encoder(input_img)
 
@@ -90,4 +92,3 @@ class SimpleAutoencoder(ModelBase):
 
         for optimizer in self.optimizers.values():
             optimizer.step()
-

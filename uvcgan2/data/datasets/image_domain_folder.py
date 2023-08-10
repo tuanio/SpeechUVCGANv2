@@ -5,6 +5,7 @@ from torchvision.datasets.folder import default_loader, IMG_EXTENSIONS
 
 from uvcgan2.consts import SPLIT_TRAIN
 
+
 class ImageDomainFolder(Dataset):
     """Dataset structure introduced in a CycleGAN paper.
 
@@ -27,19 +28,13 @@ class ImageDomainFolder(Dataset):
         Default: None
     """
 
-    def __init__(
-        self, path,
-        domain        = 'a',
-        split         = SPLIT_TRAIN,
-        transform     = None,
-        **kwargs
-    ):
+    def __init__(self, path, domain="a", split=SPLIT_TRAIN, transform=None, **kwargs):
         super().__init__(**kwargs)
 
         subdir = split + domain.upper()
 
-        self._path      = os.path.join(path, subdir)
-        self._imgs      = ImageDomainFolder.find_images_in_dir(self._path)
+        self._path = os.path.join(path, subdir)
+        self._imgs = ImageDomainFolder.find_images_in_dir(self._path)
         self._transform = transform
 
     @staticmethod
@@ -66,11 +61,10 @@ class ImageDomainFolder(Dataset):
         return len(self._imgs)
 
     def __getitem__(self, index):
-        path   = self._imgs[index]
+        path = self._imgs[index]
         result = default_loader(path)
 
         if self._transform is not None:
             result = self._transform(result)
 
         return result
-
