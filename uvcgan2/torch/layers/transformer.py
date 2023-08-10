@@ -10,17 +10,18 @@ from uvcgan2.torch.select import get_norm_layer, get_activ_layer
 def calc_tokenized_size(image_shape, token_size):
     # image_shape : (C, H, W)
     # token_size  : (H_t, W_t)
-    if image_shape[1] % token_size[0] != 0:
-        raise ValueError(
-            "Token width %d does not divide image width %d"
-            % (token_size[0], image_shape[1])
-        )
+    # not checking dividing
+    # if image_shape[1] % token_size[0] != 0:
+    #     raise ValueError(
+    #         "Token width %d does not divide image width %d"
+    #         % (token_size[0], image_shape[1])
+    #     )
 
-    if image_shape[2] % token_size[1] != 0:
-        raise ValueError(
-            "Token height %d does not divide image height %d"
-            % (token_size[1], image_shape[2])
-        )
+    # if image_shape[2] % token_size[1] != 0:
+    #     raise ValueError(
+    #         "Token height %d does not divide image height %d"
+    #         % (token_size[1], image_shape[2])
+    #     )
 
     # result : (N_h, N_w)
     return (image_shape[1] // token_size[0], image_shape[2] // token_size[1])
