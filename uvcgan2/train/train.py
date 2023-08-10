@@ -65,7 +65,7 @@ def train(args_dict):
     )
 
     print("Starting training...")
-    print(args.config.to_json(indent=4))
+    # print(args.config.to_json(indent=4))
 
     model = construct_model(args.savedir, args.config, is_train=True, device=device)
     start_epoch, history = try_continue_training(args, model)
