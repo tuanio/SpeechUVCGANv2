@@ -56,8 +56,12 @@ def train(args_dict):
     seed_everything(args.config.seed)
 
     device = get_torch_device_smart()
+    # it_train = construct_data_loaders(
+    #     args.config.data, args.config.batch_size, split="train"
+    # )
+    
     it_train = construct_data_loaders(
-        args.config.data, args.config.batch_size, split="train"
+        args.config.data, args.config.batch_size, split=""
     )
 
     print("Starting training...")
