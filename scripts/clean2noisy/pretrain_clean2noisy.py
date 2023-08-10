@@ -72,8 +72,8 @@ args_dict = {
     "model_args": {
         "masking": {
             "name": "image-patch-random",
-            "patch_size": (16, 16),
-            "fraction": 0.4,
+            "patch_size": (32, 32),
+            "fraction": 0.2,
         },
     },
     "scheduler": {
