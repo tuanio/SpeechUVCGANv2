@@ -20,16 +20,25 @@ args_dict = {
         "datasets": [
             {
                 "dataset": {
-                    "name": "imagedir",
-                    "path": "celeba_hq_resized_lanczos",
+                    "name": "clean",
+                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train",
+                },
+                "shape": (1, 129, 128),
+                "transform_train": None,
+                "transform_test": None,
+            },
+            {
+                "dataset": {
+                    "name": "noisy",
+                    "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train",
                 },
                 "shape": (1, 129, 128),
                 "transform_train": None,
                 "transform_test": None,
             },
         ],
-        "merge_type": "none",
-        "workers": 4,
+        "merge_type": "unpaired",
+        "workers": 16,
     },
     "epochs": 500,
     "discriminator": None,
