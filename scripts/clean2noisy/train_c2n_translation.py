@@ -51,7 +51,7 @@ def get_transfer_preset(cmdargs):
         return None
 
     base_model = (
-        "celeba_hq_resized_lanczos/"
+        "clean2noisy_output/"
         "model_m(simple-autoencoder)_d(None)"
         f"_g({GEN_PRESETS[cmdargs.gen]['model']})_pretrain-{cmdargs.gen}"
     )
@@ -70,7 +70,7 @@ def get_transfer_preset(cmdargs):
 
 cmdargs = parse_cmdargs()
 args_dict = {
-    "batch_size": 1,
+    "batch_size": 32,
     "data": {
         "datasets": [
             {
@@ -98,7 +98,7 @@ args_dict = {
             for domain in ["male", "female"]
         ],
         "merge_type": "unpaired",
-        "workers": 1,
+        "workers": 8,
     },
     "epochs": 500,
     "discriminator": {
