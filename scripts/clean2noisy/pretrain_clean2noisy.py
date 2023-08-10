@@ -21,6 +21,7 @@ args_dict = {
             {
                 "dataset": {
                     "name": "imagedir",
+                    "domain": "clean",
                     "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train/clean",
                 },
                 "shape": (1, 129, 128),
@@ -30,6 +31,7 @@ args_dict = {
             {
                 "dataset": {
                     "name": "imagedir",
+                    "domain": "noisy",
                     "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/train/noisy",
                 },
                 "shape": (1, 129, 128),
