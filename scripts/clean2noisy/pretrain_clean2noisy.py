@@ -48,7 +48,7 @@ args_dict = {
             #     "transform_test": None,
             # },
         ],
-        "merge_type": "unpaired",
+        "merge_type": "none",
         "workers": 16,
     },
     "epochs": 500,
