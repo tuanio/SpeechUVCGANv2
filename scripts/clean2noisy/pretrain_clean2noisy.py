@@ -23,17 +23,25 @@ args_dict = {
                     "name": "imagedir",
                     "path": "/home/stud_vantuan/share_with_150/train_uvcganv2/CD92_5h_5h/splitted_data",
                 },
-                "shape": (1, 129, 128),
+                "shape": (1, 128, 128),
                 "transform_train": [
                     {
                         'name': 'grayscale',
                         'num_output_channels': 1
+                    },
+                    {
+                        "name": "resize",
+                        "size": 128,
                     }
                 ],
                 "transform_test": [
                     {
                         'name': 'grayscale',
                         'num_output_channels': 1
+                    },
+                    {
+                        "name": "resize",
+                        "size": 128,
                     }
                 ],
             },

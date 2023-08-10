@@ -79,9 +79,27 @@ args_dict = {
                     "domain": domain,
                     "path": "celeba_hq_resized_lanczos",
                 },
-                "shape": (1, 129, 128),
-                "transform_train": None,
-                "transform_test": None,
+                "shape": (1, 128, 128),
+                "transform_train": [
+                    {
+                        'name': 'grayscale',
+                        'num_output_channels': 1
+                    },
+                    {
+                        "name": "resize",
+                        "size": 128,
+                    }
+                ],
+                "transform_test": [
+                    {
+                        'name': 'grayscale',
+                        'num_output_channels': 1
+                    },
+                    {
+                        "name": "resize",
+                        "size": 128,
+                    }
+                ]
             }
             for domain in ["male", "female"]
         ],
