@@ -61,7 +61,7 @@ def train(args_dict):
     # )
     
     it_train = construct_data_loaders(
-        args.config.data, args.config.batch_size, split=""
+        args.config.data, args.config.batch_size, split="pretrain_pool"
     )
 
     print("Starting training...")
