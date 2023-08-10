@@ -17,7 +17,7 @@ class TrainingHistory:
         if self._history is None:
             self._history = pd.DataFrame([values])
         else:
-            self._history = pd.concat([self._history, pd.DataFrame([value])])
+            self._history = pd.concat([self._history, pd.DataFrame([values])])
 
         self.save()
 
