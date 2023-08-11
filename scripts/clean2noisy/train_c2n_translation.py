@@ -67,6 +67,7 @@ def get_transfer_preset(cmdargs):
         "fuzzy": None,
     }
 
+
 batch_size = 32
 
 cmdargs = parse_cmdargs()

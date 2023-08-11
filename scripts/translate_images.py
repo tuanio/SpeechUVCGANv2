@@ -36,7 +36,9 @@ def save_images(model, savedir, sample_counter, ext):
             sample_index = sample_counter[name]
 
             image = tensor_to_image(torch_image[index])
-            image = np.round(255 * image).astype(np.uint8)
+            print(image.dtype, image.max(), image.min())
+            # image = np.round(255 * image).astype(np.uint8)
+            image = image.astype(np.uint8)
             image = Image.fromarray(image)
 
             path = os.path.join(savedir, name, f"sample_{sample_index}")
