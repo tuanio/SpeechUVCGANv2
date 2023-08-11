@@ -149,7 +149,12 @@ args_dict = {
         "mix_type": "real-fake",
         "reduction": "mean",
     },
-    "scheduler": None,
+    "scheduler": {
+        "name": "CosineAnnealingWarmRestarts",
+        "T_0": 100,
+        "T_mult": 1,
+        "eta_min": cmdargs.batch_size * 5e-8 / 512,
+    },
     "loss": "lsgan",
     "steps_per_epoch": 2000,
     "transfer": get_transfer_preset(cmdargs),
