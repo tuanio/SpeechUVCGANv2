@@ -70,7 +70,7 @@ def get_transfer_preset(cmdargs):
 
 cmdargs = parse_cmdargs()
 args_dict = {
-    "batch_size": 64,
+    "batch_size": 32,
     "data": {
         "datasets": [
             {
@@ -98,7 +98,7 @@ args_dict = {
             for domain in ["clean", "noisy"]
         ],
         "merge_type": "unpaired",
-        "workers": 8,
+        "workers": 4,
     },
     "epochs": 500,
     "discriminator": {
