@@ -160,7 +160,7 @@ args_dict = {
     ),
     "outdir": os.path.join(ROOT_OUTDIR, "clean2noisy_output", "c2n"),
     "log_level": "DEBUG",
-    "checkpoint": 50,
+    "checkpoint": 10,
 }
 
 train(args_dict)
