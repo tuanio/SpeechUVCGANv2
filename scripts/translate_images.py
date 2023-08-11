@@ -41,7 +41,7 @@ def save_images(model, savedir, sample_counter, ext):
             sample_index = sample_counter[name]
 
             image = tensor_to_image(torch_image[index])
-            image, _, _ = scale_minmax(image, 0, 255)
+            image, _, _ = scale_minmax(np.log10(image), 0, 255)
             # image = np.round(255 * image).astype(np.uint8)
             # unscale here
             image = image.astype(np.uint8).squeeze()
