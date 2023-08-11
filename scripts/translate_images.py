@@ -18,6 +18,11 @@ from uvcgan2.eval.funcs import (
 )
 from uvcgan2.utils.parsers import add_standard_eval_parsers, add_plot_extension_parser
 
+# to convert the spectrogram ( an 2d-array of real numbers) to a storable form (0-255)
+def scale_minmax(X, min=0.0, max=1.0):
+    X_std = (X - X.min()) / (X.max() - X.min())
+    X_scaled = X_std * (max - min) + min
+    return X_scaled, X.min(), X.max()
 
 def parse_cmdargs():
     parser = argparse.ArgumentParser(description="Save model predictions as images")
@@ -36,9 +41,10 @@ def save_images(model, savedir, sample_counter, ext):
             sample_index = sample_counter[name]
 
             image = tensor_to_image(torch_image[index])
-            print(image.dtype, image.max(), image.min())
+            image = scale_minmax(image, 0, 255)
             # image = np.round(255 * image).astype(np.uint8)
-            image = image.astype(np.uint8)
+            # unscale here
+            image = image.astype(np.uint8).squeeze()
             image = Image.fromarray(image)
 
             path = os.path.join(savedir, name, f"sample_{sample_index}")
