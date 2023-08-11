@@ -67,10 +67,11 @@ def get_transfer_preset(cmdargs):
         "fuzzy": None,
     }
 
+batch_size = 32
 
 cmdargs = parse_cmdargs()
 args_dict = {
-    "batch_size": 32,
+    "batch_size": batch_size,
     "data": {
         "datasets": [
             {
@@ -153,7 +154,7 @@ args_dict = {
         "name": "CosineAnnealingWarmRestarts",
         "T_0": 100,
         "T_mult": 1,
-        "eta_min": cmdargs.batch_size * 5e-8 / 512,
+        "eta_min": batch_size * 5e-8 / 512,
     },
     "loss": "lsgan",
     "steps_per_epoch": 2000,
